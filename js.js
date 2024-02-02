@@ -28,10 +28,23 @@ const fs = require('fs');
             type: 'text',
             name: 'shapeColor',
             message: 'Enter the shape\'s color (keyword or hexadecimal):'
+        },
+        {
+            type: 'number',
+            name: 'fontSize',
+            message: 'Enter font size (default is 40):',
+            initial: 40,
+            validate: value => value > 0 ? true : 'Font size must be greater than 0'
+        },
+        {
+            type: 'text',
+            name: 'fontFamily',
+            message: 'Enter font family (default is Arial):',
+            initial: 'Arial'
         }
     ]);
 
-    const { text, textColor, shape, shapeColor } = response;
+    const { text, textColor, shape, shapeColor, fontSize, fontFamily } = response;
     const svgStart = '<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">';
     const svgEnd = '</svg>';
 
@@ -48,7 +61,7 @@ const fs = require('fs');
             break;
     }
 
-    const textSvg = `<text x="150" y="120" font-family="Arial" font-size="40" fill="${textColor}" text-anchor="middle">${text}</text>`;
+    const textSvg = `<text x="150" y="120" font-family="${fontFamily}" font-size="${fontSize}" fill="${textColor}" text-anchor="middle">${text}</text>`;
 
     const svgContent = `${svgStart}${shapeSvg}${textSvg}${svgEnd}`;
 
